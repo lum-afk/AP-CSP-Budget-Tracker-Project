@@ -1,8 +1,8 @@
 # AP-CSP-Budget-Tracker-Project
 budget tracker program to record, categorize, and analyze a user's finances and to store expenses
-
+----------------------------
 Hello!
-Welcome to my budget tracker
+Welcome to my budget tracker 
 
 This project was initially developed for the AP Computer Science Principles course but I later found to be useful in tracking daily expenditures
 
