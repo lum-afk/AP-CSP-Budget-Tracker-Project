@@ -1,0 +1,117 @@
+Code:
+
+# Budget Tracker Program
+# Submitted by: Salama Alhabshi
+
+# Description:
+# This program helps users track their income and categorized expenses.
+# It allows the user to input income, record categorized expenses, and view a summary
+# showing total expenses and the remaining balance.
+
+# Lists:
+# These two lists store the expense categories and corresponding amounts.
+categories = []
+expenses = []
+
+
+# Procedure 1: add_expenses
+# Parameters: expense_list (a list of category and amount in pairs)
+# Purpose: Adds multiple categorized expenses to the appropriate category,
+# or creates a new category if it doesn't exist.
+def add_expenses(expense_list):
+    for name, amount in expense_list:           
+        if name in categories:                  
+            index = categories.index(name)
+            expenses[index] += amount           
+        else:
+            categories.append(name)
+            expenses.append(amount)
+        print(f"Added {amount} {currency} to {name}.")
+
+# Procedure 2: balance
+# Purpose: Calculates and returns the remaining budget after total expenses.
+def balance():
+    balance = income - sum(expenses)
+    if balance < 0:                             # Selection
+        print("Uh oh, seems like you've exceeded your budget.")
+    return balance
+
+# Procedure 3: summary
+# Purpose: Displays a full budget summary, including income, expenses by category, and balance.
+def summary():
+    print("Here's your budget summary:")
+    print(f"Income:            {income} {currency}")
+    print(f"Total expenses:    {sum(expenses)} {currency}")
+    print(f"Expenses spent on:")
+    for category in categories:
+        print(f"{category}: {expenses[categories.index(category)]} {currency}")
+    print(f"Remaining Balance: {balance()} {currency}")  # Call to balance()
+
+# ❖ Procedure 4 (Not Student-Developed): type_out
+# Purpose: Adds a typewriter-style text animation to enhance textual output.
+# Referenced from ChatGPT (OpenAI)
+import time
+import sys
+
+def type_out(text, delay=0.03):
+    for char in text:             
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    print()
+
+# Program Start
+
+print("Welcome to the Budget Tracker!")
+
+# Input: Ask the user to enter a currency 
+currency = input("Please enter your currency to start ($, AED, £, etc..): ")
+
+
+# Menu Loop: Continues running until the user exits the program
+while True:
+    print("-------------------------------")
+    type_out("How can I assist you?")
+    print("1. Set Income")
+    print("2. Add Expense")
+    print("3. View Summary")
+    print("4. Leave")
+
+    # Input: User selects an option
+    answer = input("Choose a number (1-4): ")
+
+    #  Option 1: Set Income
+    if answer == "1":
+        try:
+            income = int(input("Please enter your income:\n"))
+            print("Income set successfully.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    # Option 2: Add one or more categorized expenses
+    elif answer == "2":
+        temp_expenses = []
+        while True:
+            expense_name = input("Enter expense name (or '-' to end):\n")
+            if expense_name == "-":
+                break
+            try:
+                expense_amount = int(input(f"Enter amount for {expense_name}:\n"))
+                temp_expenses.append((expense_name, expense_amount))
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+                expense_amount = int(input(f"Enter amount for {expense_name}:\n"))
+                temp_expenses.append((expense_name, expense_amount))
+        add_expenses(temp_expenses)
+
+    # Option 3: View budget summary
+    elif answer == "3":
+        summary()  # Call to summary procedure
+
+    # Option 4: Exit program
+    elif answer == "4":
+        print("Always stay on budget! Goodbye!")
+        break
+
+    else:
+        print("Invalid number.")
